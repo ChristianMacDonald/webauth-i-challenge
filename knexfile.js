@@ -1,14 +1,24 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
     client: 'sqlite3',
+    userNullAsDefault: true,
     connection: {
-      filename: './dev.sqlite3'
+      filename: './data/lambda.db3'
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done);
+      }
     }
   },
-
   staging: {
     client: 'postgresql',
     connection: {
@@ -24,7 +34,6 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   },
-
   production: {
     client: 'postgresql',
     connection: {
@@ -40,5 +49,4 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-
 };
