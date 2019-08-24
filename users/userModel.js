@@ -8,6 +8,10 @@ function get(id = null) {
     }
 }
 
+function getByUsername(username) {
+    return db('users').where({ username });
+}
+
 async function insert(user) {
     let [id] = await db('users').insert(user);
     return get(id);
@@ -15,5 +19,6 @@ async function insert(user) {
 
 module.exports = {
     get,
+    getByUsername,
     insert
 };
